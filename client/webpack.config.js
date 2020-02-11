@@ -4,7 +4,7 @@ const path = require('path'),
 
 module.exports = {
     entry: {
-        app: ['./src/app/index.tsx', 'webpack-hot-middleware/client'],
+        app: './src/app/index.tsx',
         vendor: ['react', 'react-dom']
     },
     output: {
