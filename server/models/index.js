@@ -13,9 +13,9 @@ const sequelize = new Sequelize(
 );
 const Todo = sequelize.import(__dirname + '/todo-model');
 
-sequelize.sync({ force: true }).then(() => {
-    Todo.create({ name: 'First', description: 'First One', date: new Date()});
-});
+// sequelize.sync({ force: true }).then(() => {
+//     Todo.create({ name: 'First', description: 'First One', date: new Date()});
+// });
 
 module.exports =  {
     Todo
