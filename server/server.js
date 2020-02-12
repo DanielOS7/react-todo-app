@@ -9,7 +9,7 @@ const PORT = config[profile].node_port;
 app.use(cors());
 app.use(express.json());
 
-app.use('/todo', todoRouter);
+app.use('/todos', todoRouter);
 
 app.use((err, req, res, next) => {
     res.status(500).send({
