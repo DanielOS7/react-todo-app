@@ -1,4 +1,12 @@
-import * as React from "react";
+import * as React from 'react';
+import fetchTodos from './services/fetchTodo';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import {
+    useSelector as useReduxSelector,
+    TypedUseSelectorHook,
+  } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
 
 type HomeProps = {
     firstName: string,
@@ -6,6 +14,9 @@ type HomeProps = {
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
+
+    const bookSuggestion = useSelector(state => state.todos);
+    const dispatch = useDispatch();
 
     let [todos, setTodos] = React.useState([]);
 
