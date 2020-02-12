@@ -2,18 +2,17 @@ import * as React from 'react';
 import { TodoService } from './services/todo.service';
 import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
+import { MessageService } from './services/message.service';
 
 class CreateTodo extends React.Component<any, any> {
-   
-    constructor(props: any,  private todoService: TodoService ){
+    todoService = new TodoService();
+    messageService = new MessageService();
+    constructor(props: any ){
         super(props);
-
-        this.todoService = new TodoService();
 
         this.state = {
             redirect: false,
         }
-        
     }
 
     setRedirect = () => {
@@ -27,7 +26,6 @@ class CreateTodo extends React.Component<any, any> {
             return <Redirect to="/" />
         }
     }
-
 
     onSubmit = (e: any) => {
         e.preventDefault();
@@ -44,12 +42,13 @@ class CreateTodo extends React.Component<any, any> {
         .then(response => {
             if (response.status === 200) {
                 console.log('Todo Created');
+                this.messageService.createMessage({message: 'Added New Todo'})
                 this.setRedirect();
             } else {
                 alert('Failed to create Todo');
             };
         })
-        .catch(error => console.error(error))
+        .catch(error => console.error(error));
     }
 
     render() {

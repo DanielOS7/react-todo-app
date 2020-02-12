@@ -12,11 +12,19 @@ const sequelize = new Sequelize(
     }
 );
 const Todo = sequelize.import(__dirname + '/todo-model');
+const Message = sequelize.import(__dirname + '/message-model');
+
 
 // sequelize.sync({ force: true }).then(() => {
 //     Todo.create({ name: 'First', description: 'First One', date: new Date()});
 // });
 
+sequelize.sync({ force: true }).then(() => {
+    Message.create({ message: 'First'});
+});
+
+
 module.exports =  {
-    Todo
+    Todo,
+    Message
 };

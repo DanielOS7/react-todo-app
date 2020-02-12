@@ -20,7 +20,7 @@ export const TodoList: React.FC<TodoListProps> = (props) => {
                 {props.todos.map(todos => {
                     return (
                         <div>
-                            <li>{`Name: ${todos.name} Description: ${todos.description}`}
+                            <li key={todos.id}>{`Name: ${todos.name} Description: ${todos.description}`}
                                 <button onClick={() => { props.setTodoID(todos.id)}}>Edit</button> 
                                 <button onClick={() => {props.deleteTodo(todos.id)}}>Delete</button>
                             </li>

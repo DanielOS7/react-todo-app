@@ -1,3 +1,4 @@
+import { MessageService } from './message.service';
 const API = 'http://localhost:2700/todos';
 
 interface IBody {
@@ -8,6 +9,7 @@ interface IBody {
 }
 
 export class TodoService {
+    messageService = new MessageService();
 
     getTodos() {
         return fetch(`${API}`)
@@ -22,8 +24,6 @@ export class TodoService {
             },
             body: JSON.stringify(body)
         })
-        
-
     }
 
     updateTodo(body: IBody) {
@@ -38,6 +38,7 @@ export class TodoService {
                 if (response.status === 200) {
                     console.log(response);
                     // window.location.reload();
+                    this.messageService.createMessage({message: 'Updated Todo'})
                 } else {
                     alert('Failed to update todo');
                 };
@@ -45,10 +46,9 @@ export class TodoService {
             .catch( error => console.error(error));
     }
 
-
     deleteTodo(body: IBody) {
         return fetch(`${API}`, {
-            method: 'Delete',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -57,6 +57,7 @@ export class TodoService {
             .then(response => {
                 if (response.status === 200) {
                     console.log('Todo Deleted');
+                    this.messageService.createMessage({message: 'Updated Todo'})
                     // window.location.reload();
                 } else {
                     alert('Failed to update todo');

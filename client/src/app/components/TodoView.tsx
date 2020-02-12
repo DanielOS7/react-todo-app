@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TodoList } from './TodoList';
 import { TodoService } from './services/todo.service';
-import { TodoForm } from './TodoForm';
+import { MessageView } from './MessageView'
 import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
 
@@ -19,11 +19,11 @@ type TodoViewState = {
 };
 
 class TodoView extends React.Component<any, TodoViewState> {
-
-    constructor(props: any, private todoService: TodoService) {
+    todoService = new TodoService();
+    constructor(props: any) {
         super(props);
 
-        this.todoService = new TodoService();
+       
 
         this.state = {
             todos: [{
@@ -41,7 +41,7 @@ class TodoView extends React.Component<any, TodoViewState> {
 
         this.todoService.getTodos().then(data => this.setState({
             todos: data
-        }, () => { console.log(this.state.todos) }));
+        }, () => { console.log(this.state.todos) })).catch(error => console.error(error));
     };
 
     setTodoID = (todoID: number): void => {
@@ -91,10 +91,12 @@ class TodoView extends React.Component<any, TodoViewState> {
                 {this.renderRedirect()}
                 <h2>Hey</h2>
                 {/* Added condition to TodoList component to not display when todos property in state has its initial values */}
+                <div>
                 {this.state.todos[0].id === 0
                     ? null
                     : <TodoList todos={this.state.todos} setTodoID={this.setTodoID} deleteTodo={this.deleteTodo} />
                 }
+                </div>
                 <Form onSubmit={this.onSubmit}>
                     <Form.Group controlId="formName">
                         <Form.Label>Name</Form.Label>
@@ -107,6 +109,7 @@ class TodoView extends React.Component<any, TodoViewState> {
                     <button className="btn btn-primary" type="submit"> Update </button>
                     <button className="btn btn-success" onClick={this.setRedirect}>Add Todo</button>
                 </Form>
+                <MessageView />
             </div>
         )
     }
