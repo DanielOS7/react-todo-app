@@ -10,7 +10,8 @@ interface ITodos {
 type TodoListProps = {
     todos: ITodos[],
     setTodoID: Function,
-    deleteTodo: Function
+    deleteTodo: Function,
+    showForm: Function
 }
 
 export const TodoList: React.FC<TodoListProps> = (props) => {
@@ -21,7 +22,7 @@ export const TodoList: React.FC<TodoListProps> = (props) => {
                     return (
                         <div>
                             <li key={todos.id}>{`Name: ${todos.name} Description: ${todos.description}`}
-                                <button onClick={() => { props.setTodoID(todos.id)}}>Edit</button> 
+                                <button onClick={() => { props.setTodoID(todos.id); props.showForm(true)}}>Edit</button> 
                                 <button onClick={() => {props.deleteTodo(todos.id)}}>Delete</button>
                             </li>
                         </div>
@@ -30,15 +31,4 @@ export const TodoList: React.FC<TodoListProps> = (props) => {
             </ul>
         </div>
     );
-
-    // let [todos, setTodos] = React.useState([]);
-
-    // React.useEffect(() => {
-    //     async function fetchData() {
-    //         const response = await fetch(`http://localhost:2700/todos`);
-    //         const responseData = await response.json();
-    //         setTodos(responseData);
-    //     }
-    //     fetchData();
-    // }, []);
 };

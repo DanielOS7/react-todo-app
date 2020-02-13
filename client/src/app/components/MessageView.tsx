@@ -1,19 +1,19 @@
 import * as React from 'react';
-import  { MessageService }  from './services/message.service'
+import { MessageService } from './services/message.service';
 
 // interface IMessages {
 //     id: number,
 //     message: string
 // }
 
-type MessageProps = {
-    // messages: IMessages[],
-    // clearMessages: Function
+interface IMessageProps {
+    setRecordAction: Function
 }
 
-export const MessageView: React.FC<any> = (props) => {
+export const MessageView: React.FC<IMessageProps> = (props) => {
     let messageService = new MessageService();
     let [messages, setMessages] = React.useState([]);
+    let [recordActions, setRecordAction] = React.useState(true);
 
     React.useEffect(() => {
         async function fetchData() {
@@ -22,19 +22,41 @@ export const MessageView: React.FC<any> = (props) => {
             setMessages(responseData);
         }
         fetchData();
-    }, []);
-    
+    }, [messages]);
+
+
     return (
+
         <div>
-            <ul>
-                {messages.map( messages => {
+            <ul >
+                {messages.map(messages => {
                     return (
-                    <li key={messages.id}>{messages.message}</li>
+                        <li key={messages.id}>{messages.message}</li>
                     );
                 })}
             </ul>
-            <button onClick={() => {messageService.deleteMessage()}}>Delete</button>
-            <button onClick={() => {console.log(messages)}}>Log</button>
+            <button className="btn btn-danger" onClick={() => { messageService.deleteMessage() }}>Clear Messages</button>
+            <button
+                className={
+                    recordActions
+                        ? "btn btn-secondary"
+                        : "btn btn-primary"
+                }
+                onClick={() => {
+                    if (recordActions === true) {
+                        setRecordAction(false)
+                        props.setRecordAction(false)
+                    } else {
+                        setRecordAction(true)
+                        props.setRecordAction(true)
+                    }
+                }}>
+                {
+                    recordActions
+                        ? "Stop Recording"
+                        : "Record"
+                }
+            </button>
         </div>
     );
 };

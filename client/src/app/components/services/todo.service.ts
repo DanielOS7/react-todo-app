@@ -8,6 +8,7 @@ interface IBody {
     date?: Date
 }
 
+
 export class TodoService {
     messageService = new MessageService();
 
@@ -16,7 +17,7 @@ export class TodoService {
             .then(response => response.json())
     }
 
-    createTodo(body: IBody) {
+    createTodo(body: IBody ) {
         return fetch(`${API}`, {
             method: 'POST',
             headers: {
@@ -26,7 +27,7 @@ export class TodoService {
         })
     }
 
-    updateTodo(body: IBody) {
+    updateTodo(body: IBody, recordAction: boolean) {
         return fetch(`${API}`, {
             method: 'PUT',
             headers: {
@@ -37,8 +38,10 @@ export class TodoService {
             .then(response => {
                 if (response.status === 200) {
                     console.log(response);
-                    // window.location.reload();
-                    this.messageService.createMessage({message: 'Updated Todo'})
+                    window.location.reload();
+                    if(recordAction === true){
+                        this.messageService.createMessage({message: 'Updated Todo'});
+                    }
                 } else {
                     alert('Failed to update todo');
                 };
@@ -46,7 +49,7 @@ export class TodoService {
             .catch( error => console.error(error));
     }
 
-    deleteTodo(body: IBody) {
+    deleteTodo(body: IBody, recordAction: boolean) {
         return fetch(`${API}`, {
             method: 'DELETE',
             headers: {
@@ -57,8 +60,10 @@ export class TodoService {
             .then(response => {
                 if (response.status === 200) {
                     console.log('Todo Deleted');
-                    this.messageService.createMessage({message: 'Updated Todo'})
-                    // window.location.reload();
+                    if(recordAction === true){
+                        this.messageService.createMessage({message: 'Deleted Todo'});
+                    }
+                    window.location.reload();
                 } else {
                     alert('Failed to update todo');
                 };
