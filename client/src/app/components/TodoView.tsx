@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { TodoList } from './TodoList';
-import { TodoService } from './services/todo.service';
-import { MessageView } from './MessageView';
+import { getTodos, updateTodo, deleteTodo } from './services/todo.service';
 import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
+import { ITodos } from './models/todo-model';
 
-interface ITodos {
-    id: number,
-    name: string,
-    description: string,
-    date: string
+interface ITodoViewProps {
+    recordActions: boolean,
+    setMessagesState: Function
 };
 
 interface ITodoViewState {
@@ -19,13 +17,8 @@ interface ITodoViewState {
     updateFormView: boolean
 };
 
-interface ITodoViewProps {
-    recordActions: boolean
-};
-
 class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
-    todoService = new TodoService();
-    constructor(props: any) {
+    constructor(props: ITodoViewProps) {
         super(props);
 
         this.state = {
@@ -42,10 +35,7 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
     };
 
     componentDidMount = () => {
-
-        this.todoService.getTodos().then(data => this.setState({
-            todos: data
-        }, () => { console.log(this.state.todos) })).catch(error => console.error(error));
+        getTodos(this.setTodoState);
     };
 
     setRedirect = () => {
@@ -54,11 +44,18 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
         })
     };
 
+    setTodoState = (data: []) => {
+        this.setState({
+            todos: data
+        }, () => { console.log(this.state.todos) })
+    }
+
     renderRedirect = () => {
         if (this.state.redirect) {
             return <Redirect to='/create-todo' />
         }
     };
+
 
     showForm = (showForm: boolean): void => {
         this.setState({
@@ -73,8 +70,13 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
 
     };
 
+    getTodos = () => {
+        getTodos(this.setTodoState);
+    }
+
     deleteTodo = (todoID: number) => {
-        this.todoService.deleteTodo({ 'id': todoID }, this.props.recordActions)
+        deleteTodo({ 'id': todoID }, this.props.recordActions, this.getTodos, this.props.setMessagesState);
+    
     };
 
     onSubmit = (e: React.FormEvent<EventTarget>) => {
@@ -87,9 +89,7 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
             'description': target.Description.value
         }
 
-        console.log(JSON.stringify(data) + ' attempted to be updated')
-
-        this.todoService.updateTodo(data, this.props.recordActions);
+        updateTodo(data, this.props.recordActions, this.getTodos, this.props.setMessagesState);
     };
 
     render() {
@@ -97,7 +97,8 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
             <div>
                 {this.renderRedirect()}
                 <h2>Hey</h2>
-                {/* Added condition to TodoList component to not display when todos property in state has its initial values */}
+                {/* Added condition to TodoList component to not display when todos property in state has its initial values 
+                this was to overcome a race effect error when making todos in TodoList component. */}
                 <div>
                     {this.state.todos[0].id === 0
                         ? null
@@ -119,10 +120,13 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
                             <Form.Label>Description</Form.Label>
                             <Form.Control type="input" placeholder="Description" />
                         </Form.Group>
-                        <button className="btn btn-primary" type="submit">Update</button>
+                        <button
+                            className="btn btn-primary"
+                            type="submit">
+                            Update
+                        </button>
                         <button
                             className="btn btn-danger"
-                            type="submit"
                             onClick={() => { this.showForm(false) }}>
                             Cancel
                         </button>

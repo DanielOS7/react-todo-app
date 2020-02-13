@@ -1,49 +1,41 @@
 import * as React from 'react';
-import { MessageService } from './services/message.service';
+import { getMessages, deleteMessage } from './services/message.service';
 
-// interface IMessages {
-//     id: number,
-//     message: string
-// }
 
+interface IMessages {
+    id: number,
+    message: string
+}
 interface IMessageProps {
-    setRecordAction: Function
+    messages: IMessages[],
+    recordActions: boolean,
+    setRecordAction: Function,
+    setMessagesState: Function
 }
 
 export const MessageView: React.FC<IMessageProps> = (props) => {
-    let messageService = new MessageService();
-    let [messages, setMessages] = React.useState([]);
     let [recordActions, setRecordAction] = React.useState(true);
 
-    React.useEffect(() => {
-        async function fetchData() {
-            const response = await fetch(`http://localhost:2700/messages`);
-            const responseData = await response.json();
-            setMessages(responseData);
-        }
-        fetchData();
-    }, [messages]);
 
 
     return (
-
         <div>
             <ul >
-                {messages.map(messages => {
+                {props.messages.map(messages => {
                     return (
                         <li key={messages.id}>{messages.message}</li>
                     );
                 })}
             </ul>
-            <button className="btn btn-danger" onClick={() => { messageService.deleteMessage() }}>Clear Messages</button>
+            <button className="btn btn-danger" onClick={() => { deleteMessage(props.setMessagesState) }}>Clear Messages</button>
             <button
                 className={
-                    recordActions
+                    props.recordActions
                         ? "btn btn-secondary"
                         : "btn btn-primary"
                 }
                 onClick={() => {
-                    if (recordActions === true) {
+                    if (props.recordActions === true) {
                         setRecordAction(false)
                         props.setRecordAction(false)
                     } else {
@@ -52,7 +44,7 @@ export const MessageView: React.FC<IMessageProps> = (props) => {
                     }
                 }}>
                 {
-                    recordActions
+                    props.recordActions
                         ? "Stop Recording"
                         : "Record"
                 }

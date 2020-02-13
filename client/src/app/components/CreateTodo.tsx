@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { TodoService } from './services/todo.service';
+import { createTodo } from './services/todo.service';
 import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
-import { MessageService } from './services/message.service';
+import { createMessage } from './services/message.service';
 
 interface ICreateTodoProps {
-    recordActions: boolean
+    recordActions: boolean,
+    setMessagesState: Function
 };
 
+interface ICreateTodoState {
+    redirect: boolean
+};
 
-class CreateTodo extends React.Component<ICreateTodoProps, any> {
-    todoService = new TodoService();
-    messageService = new MessageService();
-    constructor(props: any) {
+class CreateTodo extends React.Component<ICreateTodoProps, ICreateTodoState> {
+    constructor(props: ICreateTodoProps) {
         super(props);
 
         this.state = {
@@ -36,27 +38,16 @@ class CreateTodo extends React.Component<ICreateTodoProps, any> {
         e.preventDefault();
         const target = e.target as HTMLFormElement;
 
-
         const data = {
             'name': target.formName.value,
-            'description': target.formDescription.value
+            'description': target.formDescription.value,
+            'date': new Date()
         }
 
         console.log(JSON.stringify(data) + ' attempted to be deleted')
 
-        this.todoService.createTodo(data)
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('Todo Created');
-                    if (this.props.recordActions === true) {
-                        this.messageService.createMessage({ message: 'Added New Todo' });
-                    }
-                    this.setRedirect();
-                } else {
-                    alert('Failed to create Todo');
-                };
-            })
-            .catch(error => console.error(error));
+        createTodo(data, this.props.recordActions, this.setRedirect, this.props.setMessagesState);
+            
     };
 
     render() {

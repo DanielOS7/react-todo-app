@@ -1,13 +1,7 @@
 import * as React from 'react';
+import { ITodos } from './models/todo-model';
 
-interface ITodos {
-    id: number,
-    name: string,
-    description: string,
-    date: string
-}
-
-type TodoListProps = {
+interface TodoListProps {
     todos: ITodos[],
     setTodoID: Function,
     deleteTodo: Function,
