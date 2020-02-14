@@ -1,5 +1,3 @@
-import { getMessages, createMessage } from './message.service';
-
 const API = 'http://localhost:2700/todos';
 
 interface IBody {
@@ -10,6 +8,11 @@ interface IBody {
 }
 
 
+/**
+ * Creates a HTTP GET request method to the todos API.
+ * 
+ * @param setTodoState a function to call to pass the response data to. 
+ */
 export const getTodos = (setTodoState: Function) => {
     return fetch(`${API}`)
         .then(response => response.json())
@@ -18,74 +21,19 @@ export const getTodos = (setTodoState: Function) => {
 
 }
 
-export const createTodo = (body: IBody, recordActions: boolean, setRedirect: Function, setMessages: Function ) => {
+/**
+ * Creates a HTTP request to the todos API.
+ * 
+ * @param body body of data to send in the request. 
+ * 
+ * @param method request method type. 
+ */
+export const todoRequest = (body: IBody, method: string) => {
     return fetch(`${API}`, {
-        method: 'POST',
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(body)
     })
-    .then(response => {
-        if (response.status === 200) {
-            console.log('Todo Created');
-            if (recordActions === true) {
-                createMessage({ message: 'Added New Todo' });
-                getMessages(setMessages);
-            }
-            setRedirect();
-        } else {
-            alert('Failed to create Todo');
-        };
-    })
-    .catch(error => console.error(error));
 }
-
-export const updateTodo = (body: IBody, recordActions: boolean, getTodos: Function, setMessages: Function) => {
-    return fetch(`${API}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body)
-    })
-    .then(response => {
-        if (response.status === 200) {
-            console.log('Todo Updated');
-            getTodos();
-            if (recordActions === true) {
-                createMessage({ message: 'Updated Todo' });
-                getMessages(setMessages);
-            }
-        } else {
-            alert('Failed to update todo');
-        };
-    })
-    .catch(error => console.error(error));
-}
-
-export const deleteTodo = (body: IBody, recordActions: boolean, getTodos: Function, setMessages: Function) => {
-    return fetch(`${API}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body)
-    })
-    .then(response => {
-        if (response.status === 200) {
-            console.log('Todo Deleted');
-            getTodos();
-            if (recordActions === true) {
-                createMessage({ message: 'Deleted Todo' });
-                getMessages(setMessages);
-
-            }
-        } else {
-            alert('Failed to update todo');
-        };
-    })
-    .catch(error => console.error(error));
-        
-}
-

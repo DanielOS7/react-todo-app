@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { getMessages, deleteMessage } from './services/message.service';
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 interface IMessages {
@@ -14,41 +15,45 @@ interface IMessageProps {
 }
 
 export const MessageView: React.FC<IMessageProps> = (props) => {
-    let [recordActions, setRecordAction] = React.useState(true);
-
-
-
     return (
         <div>
-            <ul >
-                {props.messages.map(messages => {
-                    return (
-                        <li key={messages.id}>{messages.message}</li>
-                    );
-                })}
-            </ul>
-            <button className="btn btn-danger" onClick={() => { deleteMessage(props.setMessagesState) }}>Clear Messages</button>
-            <button
-                className={
-                    props.recordActions
-                        ? "btn btn-secondary"
-                        : "btn btn-primary"
-                }
-                onClick={() => {
-                    if (props.recordActions === true) {
-                        setRecordAction(false)
-                        props.setRecordAction(false)
-                    } else {
-                        setRecordAction(true)
-                        props.setRecordAction(true)
-                    }
-                }}>
-                {
-                    props.recordActions
-                        ? "Stop Recording"
-                        : "Record"
-                }
-            </button>
+            <Container fluid style={{ textAlign: "center" }}>
+                <h2>Messages</h2>
+                <Row>
+                    <Col>
+                        <ul style={{ listStyle: "none" }} >
+                            {props.messages.map(messages => {
+                                return (
+                                    <li key={messages.id}>{messages.message}</li>
+                                );
+                            })}
+                        </ul>
+                        <button
+                            className={
+                                props.recordActions
+                                    ? "btn btn-secondary"
+                                    : "btn btn-primary"
+                            }
+                            style={{ marginRight: "5px" }}
+                            onClick={() => {
+                                if (props.recordActions === true) {
+                                    props.setRecordAction(false)
+                                } else {
+                                    props.setRecordAction(true)
+                                }
+                            }}>
+                            {
+                                props.recordActions
+                                    ? "Stop Recording"
+                                    : "Record"
+                            }
+                        </button>
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => { deleteMessage(props.setMessagesState) }}>Clear Messages</button>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 };

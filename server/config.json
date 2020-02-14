@@ -1,0 +1,18 @@
+{
+    "currentProfile": "development",
+    "development": {
+        "config_id": "development",
+        "app_name": "server",
+        "app_desc": "server application",
+        "node_port": 2700,
+        "json_indentation": 4,
+        "database": {
+            "name": "true",
+            "host": "localhost",
+            "user": "root",
+            "password": "root",
+            "port": "3306",
+            "dialect": "mysql"
+        }
+    }
+}
