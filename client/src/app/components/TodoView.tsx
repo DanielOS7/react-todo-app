@@ -175,8 +175,6 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
                     <Row>
                         <Col>
                             <div>
-                                {/* Added condition to TodoList component to not display when todos property in state has its initial values 
-                            this was to overcome a race effect error mapping todos in TodoList component. */}
                                 <TodoList
                                     todos={this.state.todos}
                                     showForm={this.showForm}
