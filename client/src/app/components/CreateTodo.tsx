@@ -88,7 +88,7 @@ class CreateTodo extends React.Component<ICreateTodoProps, ICreateTodoState> {
                             Back
                         </button>
                     </div>
-                    <h2>Create A New To-do!</h2>
+                    <h2>Create A New To-Do!</h2>
                     <Row>
                         <Col>
                             <Form onSubmit={this.onSubmit} style={{ marginLeft: "30vw", marginRight: "30vw" }}>
@@ -102,7 +102,7 @@ class CreateTodo extends React.Component<ICreateTodoProps, ICreateTodoState> {
                                     <Form.Control type="input" placeholder="Description" />
                                 </Form.Group>
                                 <button className="btn btn-success" type="submit">
-                                    Create TODO
+                                    Create To-DO
                                 </button>
                             </Form>
                         </Col>

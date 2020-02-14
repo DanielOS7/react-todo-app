@@ -171,7 +171,7 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
             <div style={{ marginTop: "10px", marginBottom: "15px" }}>
                 {this.renderRedirect()}
                 <Container fluid style={{ textAlign: "center" }}>
-                    <h2>To-do List Challenge!</h2>
+                    <h2>To-Do List Challenge!</h2>
                     <Row>
                         <Col>
                             <div>
@@ -183,7 +183,7 @@ class TodoView extends React.Component<ITodoViewProps, ITodoViewState> {
                                     setTodoDetails={this.setTodoDetails}
                                     deleteTodo={this.deleteTodo} />
                             </div>
-                            <button className="btn btn-success" style={{ marginBottom: "5px" }} onClick={this.setRedirect}>Add Todo</button>
+                            <button className="btn btn-success" style={{ marginBottom: "5px" }} onClick={this.setRedirect}>Add To-Do</button>
                             {this.state.updateFormView
                                 ? <div>
                                     <h5 style={{ color: "green", marginBottom: "5px" }}>Edit {this.state.todoName}</h5>
