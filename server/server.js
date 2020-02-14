@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const todoRouter = require('./routes/todo');
+const messageRouter = require('./routes/message');
 const app = express();
 const config = require('./config.json');
 const profile = config.currentProfile;
@@ -10,6 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/todos', todoRouter);
+app.use('/messages', messageRouter);
+
 
 app.use((err, req, res, next) => {
     res.status(500).send({

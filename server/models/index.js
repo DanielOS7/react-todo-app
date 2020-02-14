@@ -12,11 +12,18 @@ const sequelize = new Sequelize(
     }
 );
 const Todo = sequelize.import(__dirname + '/todo-model');
+const Message = sequelize.import(__dirname + '/message-model');
+
+//I used these methods once so that sequelize would initialize the new tables with data.
+// sequelize.sync({ force: true }).then(() => {
+//     Todo.create({ name: 'Get Files', description: 'By Friday', date: new Date()});
+// });
 
 // sequelize.sync({ force: true }).then(() => {
-//     Todo.create({ name: 'First', description: 'First One', date: new Date()});
+//     Message.create({ message: 'First'});
 // });
 
 module.exports =  {
-    Todo
+    Todo,
+    Message
 };

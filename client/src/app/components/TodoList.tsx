@@ -1,44 +1,41 @@
 import * as React from 'react';
+import { ITodos } from './models/todo-model';
+import { ListGroup } from 'react-bootstrap';
+import './styles/TodoList.css'
 
-interface ITodos {
-    id: number,
-    name: string,
-    description: string,
-    date: string
-}
-
-type TodoListProps = {
+interface TodoListProps {
     todos: ITodos[],
-    setTodoID: Function,
-    deleteTodo: Function
+    setTodoDetails: Function,
+    deleteTodo: Function,
+    showForm: Function
 }
 
 export const TodoList: React.FC<TodoListProps> = (props) => {
+    let index: number = 1
     return (
-        <div>
-            <ul>
+        <div style={{ marginBottom: "10px" }}>
+            <ListGroup style={{marginLeft: "10vw", marginRight: "10vw"}}>
                 {props.todos.map(todos => {
                     return (
-                        <div>
-                            <li>{`Name: ${todos.name} Description: ${todos.description}`}
-                                <button onClick={() => { props.setTodoID(todos.id)}}>Edit</button> 
-                                <button onClick={() => {props.deleteTodo(todos.id)}}>Delete</button>
-                            </li>
-                        </div>
+                        <ListGroup.Item action variant="light" key={index++}>
+                            {<span>
+                                <span style={{fontSize: "3vw", marginRight: "10px"}}>{`${todos.name}`}</span>
+                                <span>{`Description: ${todos.description}`}</span> 
+                            </span>}
+                            
+                            <span style={{ float: "right" }}>
+                                <button
+                                    className="list-button btn btn-secondary"
+                                    style={{ marginRight: "5px" }}
+                                    onClick={() => { props.setTodoDetails(todos.id, todos.name); props.showForm(true) }}>Update</button>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={() => { props.deleteTodo(todos.id) }}>Remove</button>
+                            </span>
+                        </ListGroup.Item>
                     );
                 })}
-            </ul>
+            </ListGroup>
         </div>
     );
-
-    // let [todos, setTodos] = React.useState([]);
-
-    // React.useEffect(() => {
-    //     async function fetchData() {
-    //         const response = await fetch(`http://localhost:2700/todos`);
-    //         const responseData = await response.json();
-    //         setTodos(responseData);
-    //     }
-    //     fetchData();
-    // }, []);
 };

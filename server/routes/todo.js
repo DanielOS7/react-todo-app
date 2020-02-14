@@ -15,7 +15,7 @@ router.get('', async (req, res) => {
 router.post('', async (req, res) => {
     try {
         let first = null;
-        first = await models.Todo.create({ ...req.body, date: new Date() });
+        first = await models.Todo.create({ ...req.body });
         if (first) {
             res.send({ message: 'Added Todo' });
         }
