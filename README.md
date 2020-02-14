@@ -3,7 +3,7 @@
 ## Project improvements to make this SPA better with more time
 
 - <b>Unit Testing!</b> to test the components and functionality. I have some react-redux standard tests in a recent repo 
-[[https://github.com/DanielOS7/react-redux-book-app/tree/develop/client/src]](react-redux-book-app)
+[https://github.com/DanielOS7/react-redux-book-app/tree/develop/client/src](react-redux-book-app)
 
 - <b>Redux</b> It would have been more efficient to make use of a global state instead of local states. I have utilised redux with JavaScript
 in react but there was more configuration involved with using typescript for the first time in react so I wasn't able to set it up in time 
