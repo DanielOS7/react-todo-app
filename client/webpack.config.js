@@ -4,7 +4,7 @@ const path = require('path'),
 
 module.exports = {
     entry: {
-        app: ['./src/app/index.tsx', 'webpack-hot-middleware/client'],
+        app: './src/app/index.tsx',
         vendor: ['react', 'react-dom']
     },
     output: {
@@ -21,9 +21,25 @@ module.exports = {
                 test: /\.(ts|tsx)$/,
                 loader: 'ts-loader'
             },
-            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+            { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
+            {
+                test: /\.css$/i,
+                exclude: /node_modules/,
+                use: [
+                  'style-loader',
+                  {
+                    loader: 'css-loader',
+                    options: {
+                      modules: true,
+                    },
+                  },
+                ],
+              }
         ]
     },
+    devServer: {
+        historyApiFallback: true,
+      },
     plugins: [
         new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'app', 'index.html') }),
         new webpack.HotModuleReplacementPlugin()
