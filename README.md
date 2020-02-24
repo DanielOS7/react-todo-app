@@ -1,5 +1,19 @@
 # react-todo-app
 
+## Starting the application
+
+To start the cloned application:
+
+1) Open the cloned folder in a terminal.
+
+For this application you will need MySQL installed on your machine You will need MySQL on your machine: https://dev.mysql.com/downloads/installer/
+
+2) Run: "cd server", "npm install" and then "npm start". More details and dependencies can be found here: [Server README](server/README.md)
+
+3) Open the cloned folder in a terminal again.
+
+4) Run: "cd client", "npm install" and then "npm start". More details and dependencies can be found here: [Client README](client/README.md)
+
 ## Project improvements to make this SPA better with more time
 
 - <b>Unit Testing!</b> to test the components and functionality. I have some react-redux standard tests in a recent repo 
