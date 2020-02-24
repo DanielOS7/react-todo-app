@@ -10,7 +10,7 @@ To start up the server
 
 ## Table creation
 
-If you have a databased in MySQL named "true" when the server is started two tables named "todos" and "messages" will be created for you. This is done in lines 18-24 in the [Model index](server/models/index.js)
+If you have a databased in MySQL named "true" when the server is started two tables named "todos" and "messages" will be created for you. This is done in lines 18-24 in the [Model index](models/index.js)
 
 ### `npm install`
 
