@@ -10,8 +10,8 @@ interface IMessages {
 interface IMessageProps {
     messages: IMessages[],
     recordActions: boolean,
-    setRecordAction: Function,
-    setMessagesState: Function
+    setRecordAction: (...args: any[]) => void,
+    setMessagesState: (...args: any[]) => void
 }
 
 export const MessageView: React.FC<IMessageProps> = (props) => {

@@ -11,7 +11,7 @@ interface IBody {
  * 
  * @param setMessageState a function to call to pass the response data to. 
  */
-export const getMessages = (setMessageState?: Function) => {
+export const getMessages = (setMessageState?: (...args: any[]) => void) => {
     return fetch(`${API}`)
         .then(response => response.json())
         .then(data => setMessageState(data))
@@ -25,7 +25,7 @@ export const getMessages = (setMessageState?: Function) => {
  * 
  * @param setMessages a function to call to pass the new data to.
  */
-export const createMessage = (body: IBody, setMessages: Function ) => {
+export const createMessage = (body: IBody, setMessages: (...args: any[]) => void ) => {
     return fetch(`${API}`, {
         method: 'POST',
         headers: {
@@ -48,7 +48,7 @@ export const createMessage = (body: IBody, setMessages: Function ) => {
  * 
  * @param setMessages a function to call to pass the new data to.
  */
-export const deleteMessage = (setMessages: Function) => {
+export const deleteMessage = (setMessages: (...args: any[]) => void) => {
     return fetch(`${API}`, {
         method: 'DELETE',
         headers: {
