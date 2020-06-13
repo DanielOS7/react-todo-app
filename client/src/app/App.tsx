@@ -9,10 +9,6 @@ const App: React.FC<any> = () => {
     let [recordActions, setRecordAction] = React.useState(true);
     let [messages, setMessages] = React.useState([]);
 
-    // const setMessagesState = (data: []) => {
-    //     setMessages(data)
-    // }
-
     React.useEffect(() => {
         getMessages(setMessages)
     }, []);
