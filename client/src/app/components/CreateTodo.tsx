@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 interface ICreateTodoProps {
     recordActions: boolean,
-    setMessagesState: Function
+    setMessagesState: (...args: any[]) => void
 };
 
 interface ICreateTodoState {

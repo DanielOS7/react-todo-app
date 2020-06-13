@@ -9,7 +9,7 @@ import { getMessages, createMessage } from './services/message.service';
 
 interface ITodoViewProps {
     recordActions: boolean,
-    setMessagesState: Function
+    setMessagesState: (...args: any[]) => void
 };
 
 interface ITodoViewState {

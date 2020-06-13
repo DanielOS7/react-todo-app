@@ -13,7 +13,7 @@ interface IBody {
  * 
  * @param setTodoState a function to call to pass the response data to. 
  */
-export const getTodos = (setTodoState: Function) => {
+export const getTodos = (setTodoState: (...args: any[]) => void) => {
     return fetch(`${API}`)
         .then(response => response.json())
         .then(data => setTodoState(data))

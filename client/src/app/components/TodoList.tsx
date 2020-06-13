@@ -5,9 +5,9 @@ import './styles/TodoList.css'
 
 interface TodoListProps {
     todos: ITodos[],
-    setTodoDetails: Function,
-    deleteTodo: Function,
-    showForm: Function
+    setTodoDetails: (...args: any[]) => void,
+    deleteTodo: (...args: any[]) => void,
+    showForm: (...args: any[]) => void
 }
 
 export const TodoList: React.FC<TodoListProps> = (props) => {
